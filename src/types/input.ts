@@ -5,5 +5,4 @@ export interface CustomInputProps {
   value?: string;
   onChange?: (value: string) => void;
   onSubmit?: () => void;
-  userStatus?: boolean;
 }

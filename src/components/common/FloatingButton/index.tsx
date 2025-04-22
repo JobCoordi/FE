@@ -9,12 +9,12 @@ export default function FloatingButton({
   handledarkClick,
 }: FloatingButtonProps) {
   return (
-    <div className='fixed bottom-8 right-8 flex flex-col item-end'>
+    <div className='fixed bottom-18 right-12 flex flex-col item-end'>
       {openSubMenu && (
         <ul className='mb-3 list-none p-0'>
           <li className='mt-2'>
             <button
-              className='w-14 h-14 rounded-full bg-amber-300 text-white text-xs flex items-center justify-center'
+              className='w-17 h-17 rounded-full bg-amber-300 text-black text-xs flex items-center justify-center'
               onClick={handleLanguageClick}
             >
               언어변환
@@ -22,7 +22,7 @@ export default function FloatingButton({
           </li>
           <li className='mt-2'>
             <button
-              className='w-14 h-14 rounded-full bg-amber-300 text-white text-xs flex items-center justify-center'
+              className='w-17 h-17 rounded-full bg-amber-300 text-black text-xs flex items-center justify-center'
               onClick={handledarkClick}
             >
               다크모드
@@ -31,7 +31,7 @@ export default function FloatingButton({
         </ul>
       )}
       <button
-        className='w-14 h-14 rounded-full bg-amber-300 text-white text-lg flex items-center justify-center'
+        className='w-17 h-17 rounded-full  hover:bg-amber-400 hover:rotate-90 transition-all duration-200 bg-orange-400 text-white text-lg flex items-center justify-center'
         onClick={handleMenuClick}
       >
         +

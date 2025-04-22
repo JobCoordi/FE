@@ -1,41 +1,30 @@
 'use client';
 
-import { FloatingButtonProps } from '@/types/floatingbutton';
+import { useEffect, useState } from 'react';
 
-export default function FloatingButton({
-  openSubMenu,
-  handleMenuClick,
-  handleLanguageClick,
-  handledarkClick,
-}: FloatingButtonProps) {
+export default function FloatingButton() {
+  const [show, setShow] = useState(false);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShow(window.scrollY > 200);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <div className="fixed bottom-18 right-12 flex flex-col item-end">
-      {openSubMenu && (
-        <ul className="mb-3 list-none p-0">
-          <li className="mt-2">
-            <button
-              className="w-17 h-17 rounded-full bg-amber-300 text-black text-xs flex items-center justify-center  hover:bg-amber-400 "
-              onClick={handleLanguageClick}
-            >
-              언어변환
-            </button>
-          </li>
-          <li className="mt-2">
-            <button
-              className="w-17 h-17 rounded-full bg-amber-300 text-black text-xs flex items-center justify-center  hover:bg-amber-400 "
-              onClick={handledarkClick}
-            >
-              다크모드
-            </button>
-          </li>
-        </ul>
-      )}
+    show && (
       <button
-        className="w-17 h-17 rounded-full hover:bg-amber-400 hover:rotate-90 transition-all duration-200 bg-orange-400 text-white text-lg flex items-center justify-center"
-        onClick={handleMenuClick}
+        className="fixed bottom-30 right-10 w-14 h-14 rounded-full bg-orange-400 text-white text-2xl flex items-center justify-center shadow-lg hover:bg-amber-400 transition-all duration-500 animate-bounce z-50"
+        onClick={scrollToTop}
       >
-        +
+        ↑
       </button>
-    </div>
+    )
   );
 }

@@ -1,10 +1,10 @@
-'use client';  
+'use client';
 
 import '@/styles/globals.css';
 import SmoothScroll from '@/hooks/useSmoothScroll';
-import { useState , useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import Toggle from '@/components/common/Toggle';
-
+import FloatingButton from '@/components/common/FloatingButton';
 
 export default function RootLayout({
   children,
@@ -14,18 +14,17 @@ export default function RootLayout({
   const [isDark, setIsDark] = useState(false);
 
   const toggleTheme = () => {
-    const isDark = document.documentElement.classList.contains("dark");
+    const isDark = document.documentElement.classList.contains('dark');
     if (isDark) {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
       setIsDark(false);
     } else {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
       setIsDark(true);
     }
   };
-
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
@@ -41,6 +40,7 @@ export default function RootLayout({
         <body>
           <main>
             {children}
+            <FloatingButton />
             <Toggle on={isDark} toggle={toggleTheme} />
           </main>
         </body>

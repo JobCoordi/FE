@@ -3,7 +3,7 @@
 type Props = {
   on: boolean;
   toggle: () => void;
-};
+}; /// 따로 
 
 export default function Toggle({ on, toggle }: Props) {
   return (

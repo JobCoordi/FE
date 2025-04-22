@@ -1,11 +1,7 @@
 'use client';
+import { toggleProps } from '@/types/toggle'; 
 
-type Props = {
-  on: boolean;
-  toggle: () => void;
-}; /// 따로 
-
-export default function Toggle({ on, toggle }: Props) {
+export default function Toggle({ on, toggle }: toggleProps ) {
   return (
     <div
       className="fixed bottom-16 right-6 z-50 w-[90px] h-[44px] flex items-center justify-center cursor-pointer"

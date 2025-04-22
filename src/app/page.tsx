@@ -6,7 +6,7 @@ import RotateSection from '@/components/product/main/RotateSection';
 export default function Home() {
   return (
     <>
-      <main className="bg-white">
+      <main className="bg-white dark:bg-black">
         <RotateSection />
         <TextSection key="hero" />
         <ImageSection key="main" />

@@ -53,7 +53,7 @@ export default function Page() {
 
   return (
     <div className='flex flex-col h-screen'>
-      <div className='flex-1 overflow-y-auto p-4 bg-sky-100 flex flex-col gap-2'>
+      <div className='flex-1 overflow-y-auto p-4 bg-sky-100 flex flex-col gap-2 dark:bg-black'>
         {messages.map((msg, idx) => (
           <Input
             key={idx}

@@ -36,7 +36,7 @@ export default function Input({
             value={value}
             onChange={(e) => onChange && onChange(e.target.value)}
             placeholder={placeholder}
-            className='w-full border px-3 py-2 rounded-md'
+            className='w-full border px-3 py-2 rounded-md bg-amber-100 text-black'
           />
         );
       case 'password':

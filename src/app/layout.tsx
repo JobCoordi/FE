@@ -4,7 +4,6 @@ import '@/styles/globals.css';
 import SmoothScroll from '@/hooks/useSmoothScroll';
 import { useState, useEffect } from 'react';
 import Toggle from '@/components/common/Toggle';
-import FloatingButton from '@/components/common/FloatingButton';
 
 export default function RootLayout({
   children,
@@ -40,7 +39,6 @@ export default function RootLayout({
         <body>
           <main>
             {children}
-            <FloatingButton />
             <Toggle on={isDark} toggle={toggleTheme} />
           </main>
         </body>

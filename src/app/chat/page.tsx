@@ -26,6 +26,12 @@ export default function Page() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [messages]); 
+
   const handleChatSubmit = () => {
     if (chatInput.trim() === '') return;
     setMessages((prev) => [

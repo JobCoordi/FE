@@ -1,10 +1,7 @@
-'use client';  
+'use client';
 
-import { RefObject, useEffect, useState } from 'react';
-
-interface FloatingButtonProps {
-  scrollRef?: RefObject<HTMLElement | null>;
-}
+import { useEffect, useState } from 'react';
+import { FloatingButtonProps } from '@/types/floatingbutton';
 
 export default function FloatingButton({ scrollRef }: FloatingButtonProps) {
   const [show, setShow] = useState(false);

@@ -1,8 +1,8 @@
 export interface ChatFormProps {
-  onSubmitComplete: (message: string) => void;
+  onSubmitComplete: (data: UserFormData) => void;
 }
 
-export interface FormData {
-  name: string;
+export interface UserFormData {
+  username: string;
   email: string;
 }

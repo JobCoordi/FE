@@ -67,6 +67,7 @@ export default function Page() {
     setMessages((prev) => [
       ...prev,
       { text: userText, sender: 'user' },
+      { text: '봇 응답 준비 중입니다...', sender: 'bot' },
     ]);
     setChatInput('');
 

@@ -58,13 +58,13 @@ export default function Input({
         );
       case 'chat':
         return (
-          <div className='flex items-end w-full bg-sky-50 border px-3 py-2'>
+          <div className='flex items-end w-full bg-sky-50 border px-3 py-2 dark: text-black'>
             <textarea
               ref={textareaRef}
               value={value}
               onChange={(e) => onChange?.(e.target.value)}
               placeholder='메시지를 입력하세요...'
-              className='flex-1 bg-transparent resize-none overflow-y-auto outline-none text-base leading-tight max-h-[5rem]'
+              className='flex-1 bg-transparent resize-none overflow-y-auto outline-none py-2 px-2 text-base leading-tight max-h-[5rem]'
               rows={1}
               onKeyDown={onKeyDown}
               onCompositionStart={onCompositionStart}

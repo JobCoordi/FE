@@ -1,21 +1,30 @@
-'use client';
+import { RefObject, useEffect, useState } from 'react';
 
-import { useEffect, useState } from 'react';
+interface FloatingButtonProps {
+  scrollRef?: RefObject<HTMLElement | null>;
+}
 
-export default function FloatingButton() {
+export default function FloatingButton({ scrollRef }: FloatingButtonProps) {
   const [show, setShow] = useState(false);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   useEffect(() => {
+    const target = scrollRef?.current || window;
+
     const handleScroll = () => {
-      setShow(window.scrollY > 200);
+      const scrollTop = scrollRef?.current?.scrollTop ?? window.scrollY;
+      setShow(scrollTop > 200);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+
+    target.addEventListener('scroll', handleScroll);
+    return () => {
+      target.removeEventListener('scroll', handleScroll);
+    };
+  }, [scrollRef]);
+
+  const scrollToTop = () => {
+    const target = scrollRef?.current || window;
+    target.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     show && (

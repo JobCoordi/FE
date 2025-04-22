@@ -5,6 +5,7 @@ import SmoothScroll from '@/hooks/useSmoothScroll';
 import { useState , useEffect} from 'react';
 import Toggle from '@/components/common/Toggle';
 
+
 export default function RootLayout({
   children,
 }: Readonly<{

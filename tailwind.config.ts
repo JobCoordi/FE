@@ -21,10 +21,22 @@ export default {
           "0%, 100%": { transform: "rotate(-10deg) scale(0.5)", opacity: "0" },
           "50%": { transform: "rotate(-5deg) scale(1)", opacity: "1" },
         },
+        spark3: {
+          "0%": { transform: "scale(0)", opacity: "0" },
+          "50%": { transform: "scale(1.2)", opacity: "1" },
+          "100%": { transform: "scale(0)", opacity: "0" },
+        },
+        spark4: {
+          "0%": { transform: "scale(0)", opacity: "0" },
+          "40%": { transform: "scale(1)", opacity: "1" },
+          "100%": { transform: "scale(0)", opacity: "0" },
+        },
       },
       animation: {
         spark1: "spark1 1s ease-in-out infinite",
         spark2: "spark2 1s ease-in-out infinite",
+        spark3: "spark3 1s ease-in-out",
+        spark4: "spark4 1s ease-in-out",
       },
     },
   },

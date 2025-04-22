@@ -12,6 +12,20 @@ export default {
         tablet: '745px',
         // Mobile (375px 이상 ~ 744px 이하)
       },
+      keyframes: {
+        spark1: {
+          "0%, 100%": { transform: "rotate(10deg) scale(0.5)", opacity: "0" },
+          "50%": { transform: "rotate(5deg) scale(1)", opacity: "1" },
+        },
+        spark2: {
+          "0%, 100%": { transform: "rotate(-10deg) scale(0.5)", opacity: "0" },
+          "50%": { transform: "rotate(-5deg) scale(1)", opacity: "1" },
+        },
+      },
+      animation: {
+        spark1: "spark1 1s ease-in-out infinite",
+        spark2: "spark2 1s ease-in-out infinite",
+      },
     },
   },
   plugins: [],

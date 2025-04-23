@@ -5,6 +5,7 @@ import SmoothScroll from '@/hooks/useSmoothScroll';
 import { useState, useEffect } from 'react';
 import Toggle from '@/components/common/Toggle';
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -33,6 +34,7 @@ export default function RootLayout({
     }
   }, []);
 
+
   return (
     <SmoothScroll>
       <html lang="ko">
@@ -40,6 +42,7 @@ export default function RootLayout({
           <main>
             {children}
             <Toggle on={isDark} toggle={toggleTheme} />
+
           </main>
         </body>
       </html>

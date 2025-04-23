@@ -7,6 +7,7 @@ import FloatingButton from '@/components/common/FloatingButton';
 export default function Home() {
   return (
     <>
+
       <main className="bg-white dark:bg-black">
         <RotateSection />
         <TextSection key="hero" />

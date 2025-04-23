@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import Input from '@/components/common/Input';
-import ChatBubble from '@/components/common/ChatBubble';
 import ChatForm from '@/components/product/chat/chatform';
+import { postFirstChat, postChat } from '@/libs/chat/postChat';
+import { AxiosError } from 'axios';
+import { UserFormData } from '@/types/chatform';
 
 interface ChatMessage {
   text: string;
@@ -16,7 +18,8 @@ export default function Page() {
   const [chatInput, setChatInput] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
-  const [isComposing, setIsComposing] = useState(false); // 한글 입력 여부
+  const [isComposing, setIsComposing] = useState(false);
+  const [uuid, setUuid] = useState<string | null>(null);
 
   useEffect(() => {
     if (messages.length === 0) {
@@ -25,29 +28,80 @@ export default function Page() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleChatSubmit = () => {
-    if (chatInput.trim() === '') return;
-    setMessages((prev) => [
-      ...prev,
-      { text: chatInput, sender: 'user' },
-      { text: '봇 응답 준비 중입니다...', sender: 'bot' },
-    ]);
-    setChatInput('');
-  };
-
-  const handleFormSubmit = (userMessage: string) => {
+  const handleFormSubmit = async (formData: UserFormData) => {
+    const userMessage = `${formData.email}\n${formData.username}`;
     setMessages((prev) => [
       ...prev,
       { text: userMessage, sender: 'user' },
-      { text: '제출이 되었습니다.', sender: 'bot' },
+      { text: '제출 중입니다...', sender: 'bot' },
     ]);
     setIsFormSubmitted(true);
+
+    try {
+      const response = await postFirstChat(formData);
+      setUuid(response.uuid);
+      setMessages((prev) => [
+        ...prev.slice(0, -1),
+        { text: response?.content || '응답을 가져오지 못했습니다.', sender: 'bot' },
+      ]);
+    } catch (error: unknown) {
+      let errMsg = '오류가 발생했습니다. 다시 시도해주세요.';
+      if (error instanceof AxiosError && error.response?.data?.message) {
+        errMsg = error.response.data.message;
+      }
+      setMessages((prev) => [
+        ...prev.slice(0, -1),
+        { text: errMsg, sender: 'bot' },
+      ]);
+    }
+  };
+
+  const handleChatSubmit = async () => {
+    if (chatInput.trim() === '') return;
+    if (!uuid) {
+      alert('먼저 폼을 제출해주세요.');
+      return;
+    }
+
+    const userText = chatInput;
+    setMessages((prev) => [
+      ...prev,
+      { text: userText, sender: 'user' },
+      { text: '봇 응답 준비 중입니다...', sender: 'bot' },
+    ]);
+    setChatInput('');
+
+    try {
+      const response = await postChat({
+        uuid,
+        content: userText.trim(),
+      });
+      setMessages((prev) => [
+        ...prev.slice(0, -1),
+        { text: response?.content || '응답을 가져오지 못했습니다.', sender: 'bot' },
+      ]);
+    } catch (error: unknown) {
+      let errMsg = '오류가 발생했습니다. 다시 시도해주세요.';
+      if (error instanceof AxiosError && error.response?.data?.message) {
+        const apiMsg = error.response.data.message;
+        if (
+          apiMsg === '내용을 입력해주세요.' ||
+          apiMsg === '해당 사용자가 없습니다. 폼데이터를 제출해주세요.'
+        ) {
+          errMsg = apiMsg;
+        }
+      }
+      setMessages((prev) => [
+        ...prev.slice(0, -1),
+        { text: errMsg, sender: 'bot' },
+      ]);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (isComposing) return;
     if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault(); // 마지막 한글 입력 방지
+      e.preventDefault();
       handleChatSubmit();
     }
   };
@@ -56,20 +110,18 @@ export default function Page() {
     <div className='flex flex-col h-screen'>
       <div className='flex-1 overflow-y-auto p-4 bg-sky-100 flex flex-col gap-2'>
         {messages.map((msg, idx) => (
-          <ChatBubble
+          <Input
             key={idx}
-            type='chat'
+            type='chatbubble'
             value={msg.text}
             userStatus={msg.sender === 'user'}
             alignRight={msg.sender === 'user'}
           />
         ))}
-
         {!isFormSubmitted && (
           <ChatForm onSubmitComplete={handleFormSubmit} />
         )}
       </div>
-
       {isFormSubmitted && (
         <div className='border-t'>
           <Input

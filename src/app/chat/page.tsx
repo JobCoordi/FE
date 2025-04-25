@@ -64,6 +64,21 @@ export default function Page() {
     }
   };
     
+  useEffect(() => {
+    const scrollContainer = scrollRef.current;
+    
+    const handleWheel = (e: WheelEvent) => {
+      e.stopPropagation();
+    };
+    
+    if (scrollContainer) {
+      scrollContainer.addEventListener('wheel', handleWheel, { passive: false });
+      return () => {
+        scrollContainer.removeEventListener('wheel', handleWheel);
+      };
+    }
+  }, []);
+
 
   const handleChatSubmit = async () => {
     if (chatInput.trim() === '') return;
@@ -120,6 +135,7 @@ export default function Page() {
       <div
         ref={scrollRef}
         className="flex-1 overflow-y-auto p-4 bg-sky-100 flex flex-col gap-2 dark:bg-black"
+        
       >
         {messages.map((msg, idx) => (
           <Input

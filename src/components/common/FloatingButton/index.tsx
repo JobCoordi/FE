@@ -2,6 +2,7 @@
 
 import { FloatingButtonProps } from '@/types/floatingbutton';
 import useScrollVisibility from '@/hooks/useScrollVisibility';
+import End from '@public/icon/ic_end.svg';
 
 export default function FloatingButton({ 
   type,
@@ -82,7 +83,7 @@ export default function FloatingButton({
             className="fixed bottom-30 right-10 w-14 h-14 rounded-full bg-orange-400 text-white text-sm flex items-center justify-center shadow-lg hover:bg-amber-400 transition-all duration-500 z-50"
             onClick={onClick}
           >
-            결과보기
+            <End width={35} height={35} />
           </button>
         );
       default:

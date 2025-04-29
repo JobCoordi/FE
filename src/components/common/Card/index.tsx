@@ -1,19 +1,13 @@
 'use client';
 
-interface CardProps {
-  frontClassName?: string;
-  backClassName?: string;
-  containerClassName?: string;
-  frontText?: string; 
-  backText?: string;  
-}
+import { CardProps } from '@/types/card';
 
 export default function Card({
   frontClassName = '',
   backClassName = '',
   containerClassName = '',
-  frontText = '앞면',  
-  backText = '뒷면',   
+  frontText = '앞면',
+  backText = '뒷면',
 }: CardProps) {
   return (
     <div
@@ -24,12 +18,12 @@ export default function Card({
         <div
           className={`absolute flex h-full w-full items-center justify-center rounded-xl p-4 shadow-lg backface-hidden ${frontClassName}`}
         >
-          <div>{frontText}</div> 
+          <div>{frontText}</div>
         </div>
         <div
           className={`absolute flex h-full w-full items-center justify-center rounded-xl p-4 shadow-lg rotate-y-180 backface-hidden ${backClassName}`}
         >
-          <div>{backText}</div> 
+          <div>{backText}</div>
         </div>
       </div>
     </div>

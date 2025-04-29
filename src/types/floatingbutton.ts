@@ -7,4 +7,5 @@ export interface FloatingButtonProps {
   scrollRef?: RefObject<HTMLElement | null>;
   on?: boolean;
   toggle?: () => void;
+  onClick?: () => void;
 }

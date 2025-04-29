@@ -163,6 +163,7 @@ export default function Page() {
           />
         </div>
       )}
+      <FloatingButton type="end" onClick={() => alert('클릭함')} />
       <FloatingButton type="upscroll" scrollRef={scrollRef} />
     </div>
   );

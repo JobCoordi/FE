@@ -7,7 +7,8 @@ export default function FloatingButton({
   type,
   scrollRef,
   on,
-  toggle
+  toggle,
+  onClick,
 }: FloatingButtonProps) {
   const show = useScrollVisibility(scrollRef, 200);
 
@@ -22,7 +23,7 @@ export default function FloatingButton({
         return (
           show && (
             <button
-              className="fixed bottom-30 right-10 w-14 h-14 rounded-full bg-orange-400 text-white text-2xl flex items-center justify-center shadow-lg hover:bg-amber-400 transition-all duration-500 animate-bounce z-50"
+              className="fixed bottom-44 right-10 w-14 h-14 rounded-full bg-orange-400 text-white text-2xl flex items-center justify-center shadow-lg hover:bg-amber-400 transition-all duration-500 animate-bounce z-50"
               onClick={scrollToTop}
             >
               ↑
@@ -74,6 +75,15 @@ export default function FloatingButton({
               />
             </div>
           </div>
+        );
+      case 'end':
+        return(
+          <button
+            className="fixed bottom-30 right-10 w-14 h-14 rounded-full bg-orange-400 text-white text-sm flex items-center justify-center shadow-lg hover:bg-amber-400 transition-all duration-500 z-50"
+            onClick={onClick}
+          >
+            결과보기
+          </button>
         );
       default:
         return null;

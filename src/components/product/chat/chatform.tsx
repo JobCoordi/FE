@@ -9,10 +9,11 @@ import { ChatFormProps, UserFormData } from '@/types/chatform';
 export default function ChatForm({ onSubmitComplete }: ChatFormProps) {
   const {
     handleSubmit,
-    formState: {},
+    formState: { errors },
     setValue,
     watch,
     trigger,
+    setError,
   } = useForm<UserFormData>({ mode: 'onBlur' });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -54,6 +55,18 @@ export default function ChatForm({ onSubmitComplete }: ChatFormProps) {
     handleSubmit(onSubmitForm)();
   };
 
+  const validateInput = (value: string, fieldName: string) => {
+    const invalidCharRegex = /[^a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣\s]/;
+    if (invalidCharRegex.test(value)) {
+      setError(fieldName, {
+        type: 'manual',
+        message: '영어, 한글, 공백만 입력 가능합니다.',
+      });
+    } else {
+      setError(fieldName, { type: 'manual', message: '' });
+    }
+  };
+
   return (
     <form
       onSubmit={(e) => e.preventDefault()}
@@ -80,16 +93,24 @@ export default function ChatForm({ onSubmitComplete }: ChatFormProps) {
         type="text"
         value={fields.major || ''}
         placeholder="전공"
-        onChange={(val) => setValue('major', val, { shouldValidate: true })}
+        onChange={(val) => {
+          setValue('major', val, { shouldValidate: true });
+          validateInput(val, 'major'); // Validate when the input changes
+        }}
       />
+      {errors.major && <p className="text-red-500 text-sm">{errors.major.message}</p>}
 
       <h1>3. 관심분야</h1>
       <Input
         type="text"
         value={fields.interests || ''}
         placeholder="관심분야"
-        onChange={(val) => setValue('interests', val, { shouldValidate: true })}
+        onChange={(val) => {
+          setValue('interests', val, { shouldValidate: true });
+          validateInput(val, 'interests');
+        }}
       />
+      {errors.interests && <p className="text-red-500 text-sm">{errors.interests.message}</p>}
 
       <h1>4. 성격</h1>
       <div className="flex flex-row gap-x-4 flex-wrap">
@@ -123,7 +144,6 @@ export default function ChatForm({ onSubmitComplete }: ChatFormProps) {
         ))}
       </div>
 
-      
       <h1>6. 원하는 연봉</h1>
       <div className="flex flex-row gap-x-4 flex-wrap">
         {['2000~2500', '2500~3000', '3000~3500', '3500~4000', '4000이상'].map((range) => (

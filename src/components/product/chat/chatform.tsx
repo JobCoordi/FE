@@ -3,7 +3,7 @@
 import Input from '@/components/common/Input';
 import Button from '@/components/common/Button';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ChatFormProps, UserFormData } from '@/types/chatform';
 
 export default function ChatForm({ onSubmitComplete }: ChatFormProps) {
@@ -16,8 +16,26 @@ export default function ChatForm({ onSubmitComplete }: ChatFormProps) {
   } = useForm<UserFormData>({ mode: 'onBlur' });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const [isFormComplete, setIsFormComplete] = useState(false);
   const fields = watch();
+
+  useEffect(() => {
+    const requiredFields = [
+      'username',
+      'education',
+      'major',
+      'interests',
+      'personality',
+      'workPreference',
+      'desiredSalary'
+    ];
+    
+    const allFieldsFilled = requiredFields.every(field => 
+      fields[field] && fields[field].trim() !== ''
+    );
+    
+    setIsFormComplete(allFieldsFilled);
+  }, [fields]);
 
   const onSubmitForm = async (data: UserFormData) => {
     try {
@@ -136,7 +154,7 @@ export default function ChatForm({ onSubmitComplete }: ChatFormProps) {
           type="formSubmit"
           value={isSubmitting ? '제출 중...' : '제출하기'}
           onSubmit={handleSubmitClick}
-          disabled={isSubmitting}
+          disabled={isSubmitting || !isFormComplete}
         />
       </div>
     </form>

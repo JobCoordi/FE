@@ -10,6 +10,7 @@ export interface UserFormData {
   personality: string;
   workPreference: string;
   desiredSalary: string;
+  [key: string]: string | undefined;
 }
 
 export interface StartChatRequest {

@@ -1,27 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { FloatingButtonProps } from '@/types/floatingbutton';
+import useScrollVisibility from '@/hooks/useScrollVisibility';
 
 export default function FloatingButton({ 
   type,
   scrollRef
 }: FloatingButtonProps) {
-  const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    const target = scrollRef?.current || window;
-
-    const handleScroll = () => {
-      const scrollTop = scrollRef?.current?.scrollTop ?? window.scrollY;
-      setShow(scrollTop > 200);
-    };
-
-    target.addEventListener('scroll', handleScroll);
-    return () => {
-      target.removeEventListener('scroll', handleScroll);
-    };
-  }, [scrollRef]);
+  const show = useScrollVisibility(scrollRef, 200);
 
   const scrollToTop = () => {
     const target = scrollRef?.current || window;

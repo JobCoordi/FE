@@ -3,7 +3,6 @@ export interface ChatFormProps {
 }
 
 export interface UserFormData {
-  username: string;
   education: string;
   major: string;
   interests: string;
@@ -14,7 +13,6 @@ export interface UserFormData {
 }
 
 export interface StartChatRequest {
-  username: string;
   education: string;
   major: string;
   interests: string;

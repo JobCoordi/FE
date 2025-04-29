@@ -21,7 +21,6 @@ export default function ChatForm({ onSubmitComplete }: ChatFormProps) {
 
   useEffect(() => {
     const requiredFields = [
-      'username',
       'education',
       'major',
       'interests',
@@ -60,15 +59,7 @@ export default function ChatForm({ onSubmitComplete }: ChatFormProps) {
       onSubmit={(e) => e.preventDefault()}
       className="dark:bg-amber-400 border rounded-md p-4 shadow-sm mt-2 flex flex-col gap-4 bg-sky-200"
     >
-      <h1>1. 이름</h1>
-      <Input
-        type="text"
-        value={fields.username || ''}
-        placeholder="이름"
-        onChange={(val) => setValue('username', val, { shouldValidate: true })}
-      />
-
-      <h1>2. 최종학력</h1>
+      <h1>1. 최종학력</h1>
       <div className="flex flex-row gap-x-4 flex-wrap">
         {['중학교', '고등학교', '전문대학교', '대학교', '대학원'].map((edu) => (
           <label key={edu} className="flex items-center gap-1">
@@ -84,7 +75,7 @@ export default function ChatForm({ onSubmitComplete }: ChatFormProps) {
         ))}
       </div>
 
-      <h1>3. 전공</h1>
+      <h1>2. 전공</h1>
       <Input
         type="text"
         value={fields.major || ''}
@@ -92,7 +83,7 @@ export default function ChatForm({ onSubmitComplete }: ChatFormProps) {
         onChange={(val) => setValue('major', val, { shouldValidate: true })}
       />
 
-      <h1>4. 관심분야</h1>
+      <h1>3. 관심분야</h1>
       <Input
         type="text"
         value={fields.interests || ''}
@@ -100,7 +91,7 @@ export default function ChatForm({ onSubmitComplete }: ChatFormProps) {
         onChange={(val) => setValue('interests', val, { shouldValidate: true })}
       />
 
-      <h1>5. 성격</h1>
+      <h1>4. 성격</h1>
       <div className="flex flex-row gap-x-4 flex-wrap">
         {['외향적', '내향적', '논리적', '감성적', '계획적', '즉흥적'].map((trait) => (
           <label key={trait} className="flex items-center gap-1">
@@ -116,7 +107,7 @@ export default function ChatForm({ onSubmitComplete }: ChatFormProps) {
         ))}
       </div>
 
-      <h1>6. 희망근무형태</h1>
+      <h1>5. 희망근무형태</h1>
       <div className="flex flex-row gap-x-4 flex-wrap">
         {['주택', '회사', '원격', '하이브리드'].map((type) => (
           <label key={type} className="flex items-center gap-1">
@@ -133,7 +124,7 @@ export default function ChatForm({ onSubmitComplete }: ChatFormProps) {
       </div>
 
       
-      <h1>7. 원하는 연봉</h1>
+      <h1>6. 원하는 연봉</h1>
       <div className="flex flex-row gap-x-4 flex-wrap">
         {['2000~2500', '2500~3000', '3000~3500', '3500~4000', '4000이상'].map((range) => (
           <label key={range} className="flex items-center gap-1">

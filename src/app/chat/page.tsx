@@ -41,7 +41,6 @@ export default function Page() {
 
   const handleFormSubmit = async (formData: UserFormData) => {
     const userMessage = [
-      `이름: ${formData.username}`,
       `최종학력: ${formData.education}`,
       `전공: ${formData.major}`,
       `관심분야: ${formData.interests}`,

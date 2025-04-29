@@ -3,10 +3,11 @@
 import { useState } from "react";
 import { ComponentType } from 'react';
 import { CardProps } from '@/types/card';
+import Button from '@/components/common/Button';
 
 interface PaginationProps {
   data: CardProps[];
-  CardComponent: ComponentType<CardProps>; 
+  CardComponent: ComponentType<CardProps>;
   pageSize?: number;
 }
 
@@ -38,23 +39,19 @@ export default function Pagination({
       </div>
 
       <div className="flex justify-end items-center gap-4">
-        <button
-          onClick={handlePrev}
+        <Button
+          type="prev"
+          onPrev={handlePrev}
           disabled={currentPage === 1}
-          className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
-        >
-          이전
-        </button>
+        />
         <span>
           {currentPage} / {totalPages}
         </span>
-        <button
-          onClick={handleNext}
+        <Button
+          type="next"
+          onNext={handleNext}
           disabled={currentPage === totalPages}
-          className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
-        >
-          다음
-        </button>
+        />
       </div>
     </div>
   );

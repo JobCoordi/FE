@@ -7,6 +7,7 @@ import { postFirstChat, postChat } from '@/libs/chat/postChat';
 import { AxiosError } from 'axios';
 import { UserFormData } from '@/types/chatform';
 import FloatingButton from '@/components/common/FloatingButton';
+import { useRouter } from 'next/navigation';
 
 interface ChatMessage {
   text: string;
@@ -23,6 +24,7 @@ export default function Page() {
   const [uuid, setUuid] = useState<string | null>(null);
   const [showEndButton, setShowEndButton] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (messages.length === 0) {
@@ -133,7 +135,7 @@ export default function Page() {
 
   // TODO: API 연동하기
   const handleEndButtonClick = () => {
-    alert('End 버튼 클릭됨');
+    router.push('/result');
   };
 
   return (

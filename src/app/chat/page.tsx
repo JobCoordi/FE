@@ -163,7 +163,7 @@ export default function Page() {
           />
         </div>
       )}
-      <FloatingButton scrollRef={scrollRef} />
+      <FloatingButton type="upscroll" scrollRef={scrollRef} />
     </div>
   );
 }

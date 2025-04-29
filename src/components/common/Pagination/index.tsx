@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
 import { ComponentType } from 'react';
 import { CardProps } from '@/types/card';
 import Button from '@/components/common/Button';
@@ -31,14 +31,19 @@ export default function Pagination({
 
   return (
     <div className="flex flex-col items-center justify-center gap-6">
-      
-      <div className="flex justify-between items-center gap-10">
+      <div className="flex justify-center items-center gap-10">
         {currentData.map((cardProps, index) => (
-          <CardComponent key={index} {...cardProps} />
+          <CardComponent
+            key={index}
+            {...cardProps}
+            containerClassName="h-80 w-48"
+            frontClassName="bg-blue-200 text-black"
+            backClassName="bg-blue-400 text-black"
+          />
         ))}
       </div>
 
-      <div className="flex justify-end items-center gap-4">
+      <div className="flex justify-center items-center gap-4">
         <Button
           type="prev"
           onPrev={handlePrev}

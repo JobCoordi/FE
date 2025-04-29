@@ -19,9 +19,9 @@ export default function Page() {
   const [chatInput, setChatInput] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
-  const [isComposing, setIsComposing] = useState(false); // 한글 입력 여부
+  const [isComposing, setIsComposing] = useState(false); 
   const [uuid, setUuid] = useState<string | null>(null);
-  const [showEndButton, setShowEndButton] = useState(false); // ⭐ end 버튼 표시 여부 추가
+  const [showEndButton, setShowEndButton] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -53,7 +53,7 @@ export default function Page() {
         ...prev.slice(0, -1),
         { text: response?.content || '응답을 가져오지 못했습니다.', sender: 'bot' },
       ]);
-      setShowEndButton(true); // ✅ 폼 제출 성공하면 end 버튼 보이게
+      setShowEndButton(true);
     } catch (error: unknown) {
       let errMsg = '오류가 발생했습니다. 다시 시도해주세요.';
       if (error instanceof AxiosError && error.response?.data?.message) {
@@ -131,6 +131,11 @@ export default function Page() {
     }
   };
 
+  // TODO: API 연동하기
+  const handleEndButtonClick = () => {
+    alert('End 버튼 클릭됨');
+  };
+
   return (
     <div className="flex flex-col h-screen">
       <div
@@ -165,9 +170,8 @@ export default function Page() {
         </div>
       )}
 
-      {/* ⭐ 버튼 렌더링 */}
       {showEndButton && (
-        <FloatingButton type="end" onClick={() => alert('클릭함')} />
+        <FloatingButton type="end" onClick={handleEndButtonClick} />
       )}
       <FloatingButton type="upscroll" scrollRef={scrollRef} />
     </div>

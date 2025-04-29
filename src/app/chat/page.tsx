@@ -21,6 +21,7 @@ export default function Page() {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [isComposing, setIsComposing] = useState(false); // 한글 입력 여부
   const [uuid, setUuid] = useState<string | null>(null);
+  const [showEndButton, setShowEndButton] = useState(false); // ⭐ end 버튼 표시 여부 추가
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -34,7 +35,7 @@ export default function Page() {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  }, [messages]); 
+  }, [messages]);
 
   const handleFormSubmit = async (formData: UserFormData) => {
     const userMessage = `${formData.email}\n${formData.username}`;
@@ -52,6 +53,7 @@ export default function Page() {
         ...prev.slice(0, -1),
         { text: response?.content || '응답을 가져오지 못했습니다.', sender: 'bot' },
       ]);
+      setShowEndButton(true); // ✅ 폼 제출 성공하면 end 버튼 보이게
     } catch (error: unknown) {
       let errMsg = '오류가 발생했습니다. 다시 시도해주세요.';
       if (error instanceof AxiosError && error.response?.data?.message) {
@@ -63,14 +65,14 @@ export default function Page() {
       ]);
     }
   };
-    
+
   useEffect(() => {
     const scrollContainer = scrollRef.current;
-    
+
     const handleWheel = (e: WheelEvent) => {
       e.stopPropagation();
     };
-    
+
     if (scrollContainer) {
       scrollContainer.addEventListener('wheel', handleWheel, { passive: false });
       return () => {
@@ -78,7 +80,6 @@ export default function Page() {
       };
     }
   }, []);
-
 
   const handleChatSubmit = async () => {
     if (chatInput.trim() === '') return;
@@ -135,7 +136,6 @@ export default function Page() {
       <div
         ref={scrollRef}
         className="flex-1 overflow-y-auto p-4 bg-sky-100 flex flex-col gap-2 dark:bg-black"
-        
       >
         {messages.map((msg, idx) => (
           <Input
@@ -150,6 +150,7 @@ export default function Page() {
           <ChatForm onSubmitComplete={handleFormSubmit} />
         )}
       </div>
+
       {isFormSubmitted && (
         <div className="border-t">
           <Input
@@ -163,9 +164,12 @@ export default function Page() {
           />
         </div>
       )}
-      <FloatingButton type="end" onClick={() => alert('클릭함')} />
+
+      {/* ⭐ 버튼 렌더링 */}
+      {showEndButton && (
+        <FloatingButton type="end" onClick={() => alert('클릭함')} />
+      )}
       <FloatingButton type="upscroll" scrollRef={scrollRef} />
     </div>
   );
 }
-

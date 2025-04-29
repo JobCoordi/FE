@@ -14,14 +14,12 @@ export default function ChatForm({ onSubmitComplete }: ChatFormProps) {
     watch,
     trigger,
   } = useForm<UserFormData>({ mode: 'onBlur' });
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const username = watch('username') || '';
-  const email = watch('email') || '';
-  
+
+  const fields = watch();
 
   const onSubmitForm = async (data: UserFormData) => {
-
     try {
       setIsSubmitting(true);
       console.log('서버에 제출 중');
@@ -34,33 +32,104 @@ export default function ChatForm({ onSubmitComplete }: ChatFormProps) {
   };
 
   const handleSubmitClick = async () => {
-    const isValid = await trigger(['username', 'email']);
+    const isValid = await trigger();
     if (!isValid) return;
-
     handleSubmit(onSubmitForm)();
   };
 
   return (
     <form
       onSubmit={(e) => e.preventDefault()}
-      className="dark:bg-amber-400 border rounded-md p-4 shadow-sm mt-2 flex flex-col gap-3 bg-sky-200"
+      className="dark:bg-amber-400 border rounded-md p-4 shadow-sm mt-2 flex flex-col gap-4 bg-sky-200"
     >
       <h1>1. 이름</h1>
-
       <Input
         type="text"
-        value={username}
+        value={fields.username || ''}
         placeholder="이름"
         onChange={(val) => setValue('username', val, { shouldValidate: true })}
       />
 
-      <h1>2. 이메일</h1>
+      <h1>2. 최종학력</h1>
+      <div className="flex flex-row gap-x-4 flex-wrap">
+        {['중학교', '고등학교', '전문대학교', '대학교', '대학원'].map((edu) => (
+          <label key={edu} className="flex items-center gap-1">
+            <input
+              type="radio"
+              name="education"
+              value={edu}
+              checked={fields.education === edu}
+              onChange={() => setValue('education', edu, { shouldValidate: true })}
+            />
+            {edu}
+          </label>
+        ))}
+      </div>
+
+      <h1>3. 전공</h1>
       <Input
         type="text"
-        value={email}
-        placeholder="이메일"
-        onChange={(val) => setValue('email', val, { shouldValidate: true })}
+        value={fields.major || ''}
+        placeholder="전공"
+        onChange={(val) => setValue('major', val, { shouldValidate: true })}
       />
+
+      <h1>4. 관심분야</h1>
+      <Input
+        type="text"
+        value={fields.interests || ''}
+        placeholder="관심분야"
+        onChange={(val) => setValue('interests', val, { shouldValidate: true })}
+      />
+
+      <h1>5. 성격</h1>
+      <div className="flex flex-row gap-x-4 flex-wrap">
+        {['외향적', '내향적', '논리적', '감성적', '계획적', '즉흥적'].map((trait) => (
+          <label key={trait} className="flex items-center gap-1">
+            <input
+              type="radio"
+              name="personality"
+              value={trait}
+              checked={fields.personality === trait}
+              onChange={() => setValue('personality', trait, { shouldValidate: true })}
+            />
+            {trait}
+          </label>
+        ))}
+      </div>
+
+      <h1>6. 희망근무형태</h1>
+      <div className="flex flex-row gap-x-4 flex-wrap">
+        {['주택', '회사', '원격', '하이브리드'].map((type) => (
+          <label key={type} className="flex items-center gap-1">
+            <input
+              type="radio"
+              name="workPreference"
+              value={type}
+              checked={fields.workPreference === type}
+              onChange={() => setValue('workPreference', type, { shouldValidate: true })}
+            />
+            {type}
+          </label>
+        ))}
+      </div>
+
+      
+      <h1>7. 원하는 연봉</h1>
+      <div className="flex flex-row gap-x-4 flex-wrap">
+        {['2000~2500', '2500~3000', '3000~3500', '3500~4000', '4000이상'].map((range) => (
+          <label key={range} className="flex items-center gap-1">
+            <input
+              type="radio"
+              name="desiredSalary"
+              value={range}
+              checked={fields.desiredSalary === range}
+              onChange={() => setValue('desiredSalary', range, { shouldValidate: true })}
+            />
+            {range}
+          </label>
+        ))}
+      </div>
 
       <div className="flex justify-end">
         <Button
